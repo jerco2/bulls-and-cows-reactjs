@@ -20,17 +20,7 @@ function App() {
 
   // USEEFFECT
   useEffect(() => {
-    // ensures all numbers are unique
-    const isValidCombination = () => {
-      // generate 4 digit number
-      const generate = Math.floor(1000 + Math.random() * 9000);
-      // generates a new number if it has duplicate numbers
-      if (!/(.).*?\1/.test(generate)) {
-        return generate;
-      }
-      return isValidCombination();
-    };
-
+    isValidCombination();
     setRandom(isValidCombination());
   }, []);
 
@@ -105,23 +95,24 @@ function App() {
   return (
     <div className="App-header">
       <div className="winCelebration"></div>
-      <div className="MainApp">
+      <div className="MainApp" data-testid="mainAppTestID">
         <div className="topBtns">
           <button>x</button>
           <button
             className="restartBtn"
             onClick={reloadThis}
             style={{ cursor: "pointer", backgroundColor: "red", color: "red" }}
+            data-testid="refreshBtnTestID"
           >
             x
           </button>
         </div>
-        <div className="Top">
+        <div className="Top" data-testid="headerTestID">
           <h1 className="greeting">GUESS THE NUMBER:</h1>
           <h1 className="numberX">----</h1>
         </div>
         <div className="historyContainer">
-          <History history={history} />
+          <History history={history} data-testid="historyTestID" />
         </div>
         <div className="Inputs">
           <input
@@ -133,11 +124,13 @@ function App() {
             onChange={setMyGuess}
             maxLength="4"
             placeholder="Input 4 digit number..."
+            data-testid="answerBoxTestID"
           />
           <button
             className="submitBtn"
             onClick={submitGuess}
             style={{ cursor: "pointer" }}
+            data-testid="submitButtonTestID"
           >
             Submit
           </button>
@@ -151,3 +144,16 @@ function App() {
 }
 
 export default App;
+
+// ensures all numbers are unique
+const isValidCombination = () => {
+  // generate 4 digit number
+  const generate = Math.floor(1000 + Math.random() * 9000);
+  // generates a new number if it has duplicate numbers
+  if (!/(.).*?\1/.test(generate)) {
+    return generate;
+  }
+  return isValidCombination();
+};
+
+export { isValidCombination };
