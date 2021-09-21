@@ -38,20 +38,6 @@
   z-index: 9;
 }
 
-.Top {
-  font-size: 1rem;
-  display: flex;
-  justify-content: space-around;
-  background-color: white;
-  color: #333;
-  padding: 0;
-  line-height: 15px;
-  margin-top: 0.2rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  border-radius: 5px 5px 0 0;
-}
-
 .historyContainer {
   background: #adadad;
   border-radius: 0 0 5px 5px;
@@ -63,9 +49,7 @@
   text-align: center;
   color: black;
 }
-/* .historyContainer::-webkit-scrollbar {
-  display: none;
-} */
+
 .historyContainer span {
   height: 50%;
 }
@@ -110,7 +94,7 @@
 }
 
 .topBtns button {
-  border-radius: 50%;
+  border-radius: 3px;
   border: 0;
   margin-left: 0.25rem;
   margin-bottom: 0.25rem;

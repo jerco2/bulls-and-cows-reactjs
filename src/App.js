@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
-import History from "./components/History";
+import History from "./components/history/History";
+import Header from "./components/header/Header";
+import Button from "./components/button/Button";
 import { v4 as uuid } from "uuid";
 import "./App.css";
-
-const disabledBtn = () => {
-  const btn = document.querySelector(".submitBtn");
-  if (btn.disabled === true) {
-    btn.style.cursor = "not-allowed";
-  }
-};
 
 function App() {
   // USESTATES
@@ -17,6 +12,7 @@ function App() {
   const [cowCtr, setCowCtr] = useState(0);
   const [bullCtr, setBullCtr] = useState(0);
   const [history, setHistory] = useState([]);
+  const [isDisabled, setDisable] = useState(false);
 
   // USEEFFECT
   useEffect(() => {
@@ -67,13 +63,12 @@ function App() {
     const winCeleb = document.querySelector(".winCelebration");
     const numberX = document.querySelector(".numberX");
     const greeting = document.querySelector(".greeting");
-    const submit = document.querySelector(".submitBtn");
+    const input = document.querySelector(".inputGuess");
     greeting.innerHTML = "CONGRATS! YOU WON!";
     numberX.innerHTML = random;
-    submit.disabled = true;
+    input.disabled = true;
+    setDisable(true);
     winCeleb.classList.add("show");
-    submit.classList.add("disabled");
-    disabledBtn();
   };
 
   // set the guess state, also input allows only numbers
@@ -98,21 +93,16 @@ function App() {
       <div className="MainApp" data-testid="mainAppTestID">
         <div className="topBtns">
           <button>x</button>
-          <button
+          <Button
             className="restartBtn"
             onClick={reloadThis}
-            style={{ cursor: "pointer", backgroundColor: "red", color: "red" }}
-            data-testid="refreshBtnTestID"
-          >
-            x
-          </button>
+            text={"x"}
+            style={restartButtonStyle}
+          />
         </div>
-        <div className="Top" data-testid="headerTestID">
-          <h1 className="greeting">GUESS THE NUMBER:</h1>
-          <h1 className="numberX">----</h1>
-        </div>
+        <Header bull={bullCtr} random={random} />
         <div className="historyContainer">
-          <History history={history} data-testid="historyTestID" />
+          <History history={history} />
         </div>
         <div className="Inputs">
           <input
@@ -126,14 +116,13 @@ function App() {
             placeholder="Input 4 digit number..."
             data-testid="answerBoxTestID"
           />
-          <button
+          <Button
             className="submitBtn"
             onClick={submitGuess}
-            style={{ cursor: "pointer" }}
-            data-testid="submitButtonTestID"
-          >
-            Submit
-          </button>
+            text={"SUBMIT"}
+            style={submitButtonStyle}
+            disabled={isDisabled}
+          />
         </div>
       </div>
       <p>
@@ -143,13 +132,25 @@ function App() {
   );
 }
 
+// styles
+const restartButtonStyle = {
+  marginLeft: "0.25rem",
+  marginBottom: "0B5rem",
+  backgroundColor: "red",
+  color: "red",
+  cursor: "pointer",
+};
+const submitButtonStyle = {
+  cursor: "pointer",
+};
+
 export default App;
 
 // ensures all numbers are unique
+// generate 4 digit number
+// generates a new number if it has duplicate numbers
 const isValidCombination = () => {
-  // generate 4 digit number
   const generate = Math.floor(1000 + Math.random() * 9000);
-  // generates a new number if it has duplicate numbers
   if (!/(.).*?\1/.test(generate)) {
     return generate;
   }

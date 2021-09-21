@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import App, { isValidCombination } from "./App";
-import HistoryMoves from "./components/HistoryMoves";
 
 // TEST RENDERS FOR APP
 describe("Should render the ff:", () => {
