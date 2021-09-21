@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import History from "./components/history/History";
 import Header from "./components/header/Header";
 import Button from "./components/button/Button";
+import Input from "./components/input/Input";
 import { v4 as uuid } from "uuid";
 import "./App.css";
 
@@ -50,7 +51,7 @@ function App() {
     // creates new move and stores into history
     const newMove = {
       id: uuid(),
-      title: document.querySelector(".inputGuess").value,
+      title: guess,
       cow: cowCtr,
       bull: bullCtr,
     };
@@ -63,10 +64,8 @@ function App() {
     const winCeleb = document.querySelector(".winCelebration");
     const numberX = document.querySelector(".numberX");
     const greeting = document.querySelector(".greeting");
-    const input = document.querySelector(".inputGuess");
     greeting.innerHTML = "CONGRATS! YOU WON!";
     numberX.innerHTML = random;
-    input.disabled = true;
     setDisable(true);
     winCeleb.classList.add("show");
   };
@@ -105,16 +104,12 @@ function App() {
           <History history={history} />
         </div>
         <div className="Inputs">
-          <input
+          <Input
             className="inputGuess"
             onFocus={handleFocus}
-            value={guess}
-            type="text"
-            pattern="\d*"
             onChange={setMyGuess}
-            maxLength="4"
-            placeholder="Input 4 digit number..."
-            data-testid="answerBoxTestID"
+            value={guess}
+            disabled={isDisabled}
           />
           <Button
             className="submitBtn"
