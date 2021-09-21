@@ -14,6 +14,8 @@ function App() {
   const [bullCtr, setBullCtr] = useState(0);
   const [history, setHistory] = useState([]);
   const [isDisabled, setDisable] = useState(false);
+  const [greeting, setGreeting] = useState("GUESS THE NUMBER: ");
+  const [hidden, setHidden] = useState("----");
 
   // USEEFFECT
   useEffect(() => {
@@ -62,10 +64,8 @@ function App() {
   // disables submitBtn, show winning message, reveal number
   const winner = () => {
     const winCeleb = document.querySelector(".winCelebration");
-    const numberX = document.querySelector(".numberX");
-    const greeting = document.querySelector(".greeting");
-    greeting.innerHTML = "CONGRATS! YOU WON!";
-    numberX.innerHTML = random;
+    setHidden(random);
+    setGreeting("CONGRATS! YOU WON!");
     setDisable(true);
     winCeleb.classList.add("show");
   };
@@ -99,7 +99,7 @@ function App() {
             style={restartButtonStyle}
           />
         </div>
-        <Header bull={bullCtr} random={random} />
+        <Header greeting={greeting} hidden={hidden} />
         <div className="historyContainer">
           <History history={history} />
         </div>
@@ -127,7 +127,7 @@ function App() {
   );
 }
 
-// styles
+// button styles
 const restartButtonStyle = {
   marginLeft: "0.25rem",
   marginBottom: "0B5rem",
@@ -145,11 +145,12 @@ export default App;
 // generate 4 digit number
 // generates a new number if it has duplicate numbers
 const isValidCombination = () => {
-  const generate = Math.floor(1000 + Math.random() * 9000);
-  if (!/(.).*?\1/.test(generate)) {
-    return generate;
-  }
-  return isValidCombination();
+  const combination = Math.floor(1000 + Math.random() * 9000);
+  return isUnique(combination) ? combination : isValidCombination();
 };
 
-export { isValidCombination };
+const isUnique = (combination) => {
+  return !/(.).*?\1/.test(combination);
+};
+
+export { isValidCombination, isUnique };

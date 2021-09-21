@@ -1,18 +1,10 @@
 import React from "react";
 
-function Header({ bullCtr, random }) {
-  const win = () => {
-    if (bullCtr === 4) {
-      document.querySelector(".greeting").innerHTML = "CONGRATS! YOU WON!";
-      document.querySelector(".numberX").innerHTML = random;
-    }
-  };
-  win();
-
+function Header({ greeting, hidden }) {
   return (
     <div style={headerStyle}>
-      <h1 className="greeting">GUESS THE NUMBER: </h1>
-      <h1 className="numberX">----</h1>
+      <h1 className="greeting">{greeting}</h1>
+      <h1 className="numberX">{hidden}</h1>
     </div>
   );
 }
